@@ -5,7 +5,7 @@ use wmidi::{MidiMessage, FromBytesError};
 fn main() {
     let mut args = env::args().skip(1);
     let midi_in: String = args.next().expect("The first argument should be the MIDI input device.");
-    let mut f = fs::File::options().write(true).open(&midi_in).expect(&format!("Cannot open MIDI IN '{}'", midi_in));
+    let mut f = fs::File::options().read(true).open(&midi_in).expect(&format!("Cannot open MIDI IN '{}'", midi_in));
     let mut buf: [u8; 1] = [0; 1];
     let mut bytes = Vec::new();
     while f.read_exact(&mut buf).is_ok() {
@@ -25,4 +25,5 @@ fn main() {
             }
         }
     }
+    println!("Input device disconnected.");
 }
